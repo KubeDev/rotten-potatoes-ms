@@ -3,8 +3,8 @@
 ## Estrutura do projeto
 Esse projeto é baseado em uma aquitetura de Microsserviços e depende de outros 2 projetos pra funcionar
 
-- [Serviço de Filmes](https://github.com/fabricioveronez/movies)
-- [Serviço de Review](https://github.com/fabricioveronez/reviews)
+- [Serviço de Filmes](https://github.com/kubedev/movie)
+- [Serviço de Review](https://github.com/kubedev/review)
 
 Segue abaixo o diagrama:
 
