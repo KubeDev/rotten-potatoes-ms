@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request, url_for, redirect, Response, jsonify
-import os 
+import os
+
+from flask.helpers import send_file 
 from models.review import Review
 from models.movie import Movie
 from middleware import set_unhealth, set_unready_for_seconds, middleware
 import logging
 from services.movie import MovieService
 from services.review import ReviewService
+import requests
 
 app = Flask(__name__,
             static_url_path='', 
@@ -22,6 +25,13 @@ def index():
     app.logger.info('Obtendo a lista de filmes no MongoDB')
     sliders = filmes[-3:]
     return render_template('index.html', filmes=filmes, sliders=sliders)
+
+@app.route('/imagensfilme/<string:filme>', methods=['GET','POST'])
+def imagem(filme):
+
+    base_url = os.getenv("MOVIE_SERVICE_URI", "http://localhost:8181")
+    response = requests.get(self.base_url + '/imagensfilme/' + filme)
+    return 
 
 @app.route('/single/<string:oid>', methods=['GET','POST'])
 def single(oid):
@@ -76,3 +86,7 @@ else:
     gunicorn_logger = logging.getLogger('gunicorn.error')
     app.logger.handlers = gunicorn_logger.handlers
     app.logger.setLevel(gunicorn_logger.level)
+
+@app.route('/img/<path:path>')
+def send_js(path):
+    return send_file('static/imagensfilme/' + str(path))
