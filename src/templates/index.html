@@ -7,7 +7,7 @@
 				<div class="slider">
 					<ul class="slides">
 						{% for slider in sliders %}
-						<li><a href="{{ url_for('single', oid=slider.id) }}"><img src="/img/{{ slider.slide }}" /></a></li>												
+						<li><a href="{{ url_for('single', oid=slider.id) }}"><img src="/img{{ slider.slide }}" /></a></li>												
 						{% endfor %}
 					</ul>
 				</div>
@@ -16,7 +16,7 @@
 		<div class="movie-list">
 			{% for filme in filmes %}
 			<div class="movie">
-				<figure class="movie-poster"><img src="/img/{{ filme.thumb }}" alt="#"></figure>
+				<figure class="movie-poster"><img src="/img{{ filme.thumb }}" alt="#"></figure>
 				<div class="movie-title"><a href="{{ url_for('single', oid=filme.id) }}">{{ filme.title }}</a></div>
 				<p>{{ filme.summary }}</p>
 			</div>
