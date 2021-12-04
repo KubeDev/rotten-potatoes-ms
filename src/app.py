@@ -26,13 +26,6 @@ def index():
     sliders = filmes[-3:]
     return render_template('index.html', filmes=filmes, sliders=sliders)
 
-@app.route('/imagensfilme/<string:filme>', methods=['GET','POST'])
-def imagem(filme):
-
-    base_url = os.getenv("MOVIE_SERVICE_URI", "http://localhost:8181")
-    response = requests.get(self.base_url + '/imagensfilme/' + filme)
-    return 
-
 @app.route('/single/<string:oid>', methods=['GET','POST'])
 def single(oid):
 
@@ -89,4 +82,4 @@ else:
 
 @app.route('/img/<path:path>')
 def send_js(path):
-    return send_file('static/imagensfilme/' + str(path))
+    return send_file('static/' + str(path))
