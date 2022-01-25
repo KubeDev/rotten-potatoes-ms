@@ -6,7 +6,7 @@ A aplicação foi construída em ***Python*** que realiza o cadastro de *reviews
 
 Essa aplicação utiliza dois microserviços que são utilizados para acessar e atualizar os dados que serão utilizados na aplicação, são eles:
 
- - [Micorserviço de review](https://github.com/nossadiretiva/review) - onde são armazenados os dados de review dos filmes apresentados pela aplicação
+ - [Microserviço de review](https://github.com/nossadiretiva/review) - onde são armazenados os dados de review dos filmes apresentados pela aplicação
  - [Microserviço de filmes](https://github.com/nossadiretiva/movie) - onde estão cadastrados os filmes exibidos no site da aplicação
 
 A imagem abaixo mostra como está organizada a estrutura do projeto da aplicação e seus microserviços:
