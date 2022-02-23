@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: src
+      dockerfile: Dockerfile
+    container_name: movie-app
+    image: nossadiretiva/movie-app:v1
+    ports:
+      - 5000:5000
+    networks:
+      - movie_network
+    depends_on:
+      - movie-service
+      - review-service
+    environment:
+      MOVIE_SERVICE_URI: http://movie-service:8181
+      REVIEW_SERVICE_URI: http://review-service
+
+  movie-service:
+    build:
+      context: ../movie/src
+      dockerfile: Dockerfile
+    container_name: movie-service
+    image: nossadiretiva/movie-service:v1
+    ports:
+      - 8181:8181
+    networks:
+      - movie_network
+    depends_on:
+      - mongodb
+    environment:
+      MONGODB_URI: mongodb://mongouser:mongopwd@mongodb-movie:27017/admin
+
+  review-service:
+    build:
+      context: ../review/src
+      dockerfile: Dockerfile
+    container_name: review-service
+    image: nossadiretiva/review-service:v1
+    ports:
+      - 8282:80
+    networks:
+      - movie_network
+    depends_on:
+      - postgresdb
+    environment:
+      ConnectionStrings__MyConnection: Host=postgresdb-movie;Database=review;Username=pguser;Password=Pg@123;
+
+  mongodb:
+    container_name: mongodb-movie
+    image: mongo:5.0.5
+    ports: 
+      - 27017:27017
+    networks:
+      - movie_network
+    volumes:
+      - mongodb_movie_vol:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongouser
+      MONGO_INITDB_ROOT_PASSWORD: mongopwd
+
+  postgresdb:
+    container_name: postgresdb-movie
+    image: postgres:14.1-alpine
+    ports: 
+      - 5432:5432
+    networks:
+      - movie_network
+    volumes:
+      - postgresdb_movie_vol:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: Pg@123
+      POSTGRES_DB: review
+
+volumes:
+  mongodb_movie_vol:
+  postgresdb_movie_vol:
+
+networks:
+  movie_network:
+    driver: bridge
